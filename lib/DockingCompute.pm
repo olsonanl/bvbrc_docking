@@ -672,7 +672,7 @@ sub preflight
         cpu => 8,
         memory => $mem,
         runtime => $runtime,
-        policy_data => { gpu_count => 1, partition => 'gpu' },
+        policy_data => { gpu_count => 1, partition => 'gpu', constraint => 'V100' },
     };
     return $pf;
 }
