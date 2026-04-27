@@ -202,13 +202,11 @@ def parse_sample_results(input_details_dict, input_ligand_dict):
         write_html_report_all_ligands_invalid(input_details_dict, input_ligand_dict)
         sys.exit(0)
     dff = pd.DataFrame(rows)
-    dff = dff.astype({
-                    "Vinardo": float, 
-                     "score": float, 
-                     "CNNscore": float, 
-                     "CNNaffinity": float, 
-                    }
-                     )
+    # Convert numeric columns, handling 'NA' strings from failed GNINA scoring
+    numeric_cols = ["Vinardo", "score", "CNNscore", "CNNaffinity"]
+    for col in numeric_cols:
+        if col in dff.columns:
+            dff[col] = pd.to_numeric(dff[col], errors='coerce')
     dff = dff.round(3)
     # check for a ws file with three columns 
     three_col_ws_file = os.path.join(input_details_dict["staging_dir"],"three_col_ws_file.txt")
