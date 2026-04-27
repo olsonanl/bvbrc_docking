@@ -37,23 +37,19 @@ local_tools: $(BIN_DIR)/diffdock_run $(BIN_DIR)/count-pdb-residues
 
 # Simplified DiffDock wrapper (replaces run_local_docking)
 $(BIN_DIR)/diffdock_run: bvbrc_docking/diffdock_run.py
-	export KB_CONDA_BASE=$(BVDOCK_CONDA_BASE); \
-	export KB_CONDA_ENV=$(BVDOCK_ENV); \
+	export KB_CONDA_ENV=$(BVDOCK_CONDA_ENV); \
 	$(WRAP_PYTHON_SCRIPT) '$$KB_TOP/modules/$(CURRENT_DIR)/$<' $@
 
 # Legacy wrapper (kept for backward compatibility)
 $(BIN_DIR)/run_local_docking: bvbrc_docking/run_local_docking.py
-	export KB_CONDA_BASE=$(BVDOCK_CONDA_BASE); \
-	export KB_CONDA_ENV=$(BVDOCK_ENV); \
+	export KB_CONDA_ENV=$(BVDOCK_CONDA_ENV); \
 	$(WRAP_PYTHON_SCRIPT) '$$KB_TOP/modules/$(CURRENT_DIR)/$<' $@
 
 $(BIN_DIR)/count-pdb-residues: bvbrc_docking/count-pdb-residues.py
-	export KB_CONDA_BASE=$(BVDOCK_CONDA_BASE); \
-	export KB_CONDA_ENV=$(BVDOCK_ENV); \
+	export KB_CONDA_ENV=$(BVDOCK_CONDA_ENV); \
 	$(WRAP_PYTHON_SCRIPT) '$$KB_TOP/modules/$(CURRENT_DIR)/$<' $@
 $(BIN_DIR)/check_input_smile_strings: scripts/check_input_smile_strings.py
-	export KB_CONDA_BASE=$(BVDOCK_CONDA_BASE); \
-	export KB_CONDA_ENV=$(BVDOCK_ENV); \
+	export KB_CONDA_ENV=$(BVDOCK_CONDA_ENV); \
 	$(WRAP_PYTHON_SCRIPT) '$$KB_TOP/modules/$(CURRENT_DIR)/$<' $@
 
 deploy-local-tools:
@@ -61,8 +57,7 @@ deploy-local-tools:
 	export KB_TOP=$(TARGET); \
 	export KB_RUNTIME=$(DEPLOY_RUNTIME); \
 	export KB_PYTHON_PATH=$(TARGET)/lib ; \
-	export KB_CONDA_BASE=$(BVDOCK_CONDA_BASE); \
-	export KB_CONDA_ENV=$(BVDOCK_ENV); \
+	export KB_CONDA_ENV=$(BVDOCK_CONDA_ENV); \
 	for script in diffdock_run count-pdb-residues check_input_smile_strings ; do \
 	    cp bvbrc_docking/$$script.py $(TARGET)/pybin; \
 	    $(WRAP_PYTHON_SCRIPT) "$$sbase/pybin/$$script.py" $(TARGET)/bin/$$script; \
