@@ -20,6 +20,7 @@ import argparse
 import glob
 import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -422,12 +423,24 @@ def main():
     # Create output directory
     os.makedirs(args.outdir, exist_ok=True)
 
-    # Determine GNINA path
+    # Determine GNINA path - check multiple locations
     gnina_path = args.gnina
     if not gnina_path:
-        gnina_path = os.path.join(args.diffdock_dir, 'gnina')
-        if not os.path.exists(gnina_path):
-            gnina_path = None
+        # Check common GNINA locations in order of preference
+        gnina_candidates = [
+            os.environ.get('BVDOCK_GNINA_PATH'),  # Explicit environment variable
+            shutil.which('gnina'),  # In PATH (e.g., from conda environment)
+            os.path.join(args.diffdock_dir, 'gnina'),  # Legacy location
+        ]
+        for candidate in gnina_candidates:
+            if candidate and os.path.exists(candidate):
+                gnina_path = candidate
+                break
+
+    if gnina_path:
+        print(f"GNINA: {gnina_path}")
+    else:
+        print("GNINA: not found (CNN scoring will be skipped)")
 
     print("=== DiffDock Docking ===")
     print(f"Version: {args.version}")
