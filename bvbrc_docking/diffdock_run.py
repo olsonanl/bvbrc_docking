@@ -164,7 +164,6 @@ def run_diffdock(diffdock_dir, csv_path, output_dir, version="1.1",
             'python', '-u', '-m', 'inference',
             '--protein_ligand_csv', csv_path,
             '--out_dir', output_dir,
-            '--bad_ligands', os.path.join(output_dir, 'bad-ligands.txt'),
         ]
 
         if batch_size > 0:
