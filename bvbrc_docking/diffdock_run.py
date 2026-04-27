@@ -254,10 +254,11 @@ def _post_process_v1(output_dir, protein_pdb, ligands, gnina_path, top_n):
                 if gnina_path and os.path.exists(gnina_path):
                     mol = cal_cnn_aff(protein_pdb, sdf, gnina_path)
                     if mol:
+                        # mol.data is a pybel MoleculeData object, access like dict with []
                         scores = {
-                            'CNNscore': mol.data.get('CNNscore', 'NA'),
-                            'CNNaffinity': mol.data.get('CNNaffinity', 'NA'),
-                            'Vinardo': mol.data.get('minimizedAffinity', 'NA'),
+                            'CNNscore': mol.data['CNNscore'] if 'CNNscore' in mol.data else 'NA',
+                            'CNNaffinity': mol.data['CNNaffinity'] if 'CNNaffinity' in mol.data else 'NA',
+                            'Vinardo': mol.data['minimizedAffinity'] if 'minimizedAffinity' in mol.data else 'NA',
                         }
 
                 output_rows.append({
@@ -350,10 +351,11 @@ def _post_process_v11(output_dir, protein_pdb, ligands, gnina_path, top_n):
                 if gnina_path and os.path.exists(gnina_path):
                     mol = cal_cnn_aff(protein_pdb, entry['sdf_path'], gnina_path)
                     if mol:
+                        # mol.data is a pybel MoleculeData object, access like dict with []
                         scores = {
-                            'CNNscore': mol.data.get('CNNscore', 'NA'),
-                            'CNNaffinity': mol.data.get('CNNaffinity', 'NA'),
-                            'Vinardo': mol.data.get('minimizedAffinity', 'NA'),
+                            'CNNscore': mol.data['CNNscore'] if 'CNNscore' in mol.data else 'NA',
+                            'CNNaffinity': mol.data['CNNaffinity'] if 'CNNaffinity' in mol.data else 'NA',
+                            'Vinardo': mol.data['minimizedAffinity'] if 'minimizedAffinity' in mol.data else 'NA',
                         }
 
                 f.write('\t'.join([
