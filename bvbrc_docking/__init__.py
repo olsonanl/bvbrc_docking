@@ -1,2 +1,2 @@
-from bvbrc_docking.diffdock import diff_dock
-from bvbrc_docking.fred import fred_dock
+# Package imports are done lazily in the individual entry points
+# to avoid loading unnecessary dependencies (e.g., OpenEye for DiffDock runs)
