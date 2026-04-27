@@ -329,11 +329,12 @@ def cal_cnn_aff(pdb_file, sdf_file, gnina_exe="gnina", log_handle=None):
     tempdir = tempfile.TemporaryDirectory()
 
     output_sdf = f"{tempdir.name}/{os.path.basename(sdf_file)}"
+    # Use --no_gpu for CPU-only mode to avoid CUDA compatibility issues
     cmd = (
-        f"{gnina_exe}  --minimize --scoring vinardo "
+        f"{gnina_exe} --no_gpu --minimize --scoring vinardo "
         f"-r {pdb_file} -l {sdf_file} "
-        f"--autobox_ligand {sdf_file}  "
-        f"--autobox_add 2 -o {output_sdf} "
+        f"--autobox_ligand {sdf_file} "
+        f"--autobox_add 2 -o {output_sdf}"
     )
     run_and_save(cmd, output_file=log_handle)
 
