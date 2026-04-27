@@ -9,7 +9,7 @@
 		"id": "protein_input_type",
 		"label": "Type of pdb input to use: input_pdb, user_pdb_file",
 		"required": 1,
-		"type": "string",
+		"type": "string"
 		},
 		{
 			"id": "input_pdb",
@@ -31,7 +31,7 @@
 			"id": "ligand_library_type",
 			"label": "Type of ligand library to use: ws_file, named_library, smiles_list",
 			"required": 1,
-			"type": "string",
+			"type": "string"
 		},
 		{
 			"id": "ligand_named_library",
@@ -65,6 +65,22 @@
 			"desc": "The batch size impacts Diff Dock preformance. The size is reset according to protein size in lib Docking Commpute pm.",
 			"type": "int"
 
+		},
+		{
+			"id": "samples_per_complex",
+			"label": "Samples per complex",
+			"required": 0,
+			"default": 10,
+			"desc": "Number of pose samples to generate per protein-ligand pair. Higher values may improve results but increase runtime.",
+			"type": "int"
+		},
+		{
+			"id": "inference_steps",
+			"label": "Inference steps",
+			"required": 0,
+			"default": 20,
+			"desc": "Number of diffusion steps for pose generation. Higher values may improve accuracy but increase runtime.",
+			"type": "int"
 		},
 			{
 				"id": "output_path",

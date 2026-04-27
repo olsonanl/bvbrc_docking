@@ -342,12 +342,27 @@ sub compute_pdb
     {
 	@batch_size = ('--batch-size', $self->params->{batch_size});
     }
-    my @cmd = ('run_local_docking',
-	       @batch_size,
-		'--drug-dbs', $ligand_file,
-		'--name', 'diffdock_1_1',
-		'--receptor-pdb', $pdb->{local_path},
-	       $work_out);
+
+    #
+    # Use simplified diffdock_run.py script
+    #
+    my @cmd = ('diffdock_run',
+	       '--pdb', $pdb->{local_path},
+	       '--ligands', $ligand_file,
+	       '--outdir', $work_out,
+	       @batch_size);
+
+    # Add optional parameters if specified
+    if ($self->params->{samples_per_complex}) {
+	push @cmd, '--samples-per-complex', $self->params->{samples_per_complex};
+    }
+    if ($self->params->{inference_steps}) {
+	push @cmd, '--inference-steps', $self->params->{inference_steps};
+    }
+    if ($self->params->{top_n}) {
+	push @cmd, '--top-n', $self->params->{top_n};
+    }
+
     print "RUN @cmd\n";
     #
     # Quasi debugging; don't run if the output is already there.
