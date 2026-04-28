@@ -1,6 +1,6 @@
 {
     "ligand_library_type": "smiles_list",
-    "_tmpdir": "/home/olson/P3/dev-ubuntu/modules/bvbrc_docking/tmp.1011370",
+    "xx_tmpdir": "/home/olson/P3/dev-ubuntu/modules/bvbrc_docking/tmp.1011370",
     "output_path": "/olson@patricbrc.org/home/test",
     "output_file": "docking-01",
     "protein_input_type": "input_pdb",
