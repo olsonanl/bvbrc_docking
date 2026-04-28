@@ -147,7 +147,6 @@ sub run
 
                 # Open the PDB file for reading
                 open (my $fh, '<', $pdb_file) or die "Could not open file '$pdb_file' $!";
-                my $protein_id;
 
                 # Try to find the protein ID in the HEADER line
                 while (my $line = <$fh>) {
